@@ -1,0 +1,14 @@
+# Archivos generados por VS Code
+.vscode/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos temporales
+*.log
+*.tmp
+
+# Evita subir carpetas de pruebas o backups, si los tuvieras
+node_modules/
+dist/
