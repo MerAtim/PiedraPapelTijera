@@ -32,3 +32,7 @@ El objetivo de este proyecto es afianzar conocimientos de desarrollo frontend co
 ![Captura del juego](https://github.com/MerAtim/PiedraPapelTijera/blob/main/assets/shot.png?raw=true) <br> <br>
 
 ### ¡Gracias por visitar el proyecto! 🙌
+
+## 🔗 Probar el juego en línea
+
+👉 [¡Jugá ahora!](https://meratim.github.io/PiedraPapelTijera/)
