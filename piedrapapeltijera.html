@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Piedra, Papel o Tijera</title>
+    <link
+    href="https://fonts.googleapis.com/css2?family=Nunito&display=swap"
+    rel="stylesheet"
+    />
+    <style>
+    body {
+        font-family: "Nunito", sans-serif;
+        text-align: center;
+        background-color: #efefef;
+        padding: 20px;
+    }
+    #resultado,
+    #elecciones,
+    #marcador,
+    #historial {
+        margin: 20px;
+        font-size: 20px;
+    }
+    .btn-jugada {
+        background: none;
+        border: none;
+        margin: 10px;
+        cursor: pointer;
+    }
+    .btn-jugada img {
+        width: 100px;
+        height: 100px;
+        transition: transform 0.2s ease;
+    }
+    .btn-jugada:hover img {
+        transform: scale(1.1);
+    }
+    #reiniciar {
+        display: none;
+        padding: 10px 20px;
+        font-size: 18px;
+        font-family: "Nunito", sans-serif;
+        background-color: #f44336;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+    #reiniciar:hover {
+        background-color: #d73833;
+    }
+    .label{
+        text-align: center;
+        font-size: 16px;
+        margin-top: 5px;
+        font-family: "Nunito", sans-serif;
+        font-weight: bold;
+    }
+    </style>
+</head>
+<body>
+    <h1>Piedra, Papel o Tijera</h1>
+    <img
+    src="./assets/PPTCP.png"
+    alt="Piedra Papel Tijera"
+    width="800"
+    height="300"
+    />
+<div><h2>Tienes 3 rondas para jugar. Selecciona piedra, papel o tijera:</h2></div>
+<div id="opciones">
+<button class="btn-jugada" onclick="jugar(1)">
+    <div>
+    <img src="./assets/piedra.png" alt="Piedra">
+    <div class="label">Piedra</div>
+    </div>
+</button>
+<button class="btn-jugada" onclick="jugar(2)">
+    <div>
+    <img src="./assets/papel.png" alt="Papel">
+    <div class="label">Papel</div>
+    </div>
+</button>
+<button class="btn-jugada" onclick="jugar(3)">
+    <div>
+    <img src="./assets/tijera.png" alt="Tijera">
+    <div class="label">Tijera</div>
+    </div>
+</button>
+</div>
+
+
+    <div id="elecciones"></div>
+    <div id="resultado"></div>
+    <div id="marcador"></div>
+    <div id="historial"><strong>Historial de Rondas:</strong><br /></div>
+
+    <button id="reiniciar" onclick="reiniciarJuego()">Reiniciar juego</button>
+
+    <script>
+    let victoriasJugador = 0;
+    let victoriasPc = 0;
+    let partidasJugadas = 0;
+
+    function obtenerNumeroAleatorio(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+
+    function jugar(jugador) {
+        if (partidasJugadas === 3) return;
+
+        const pc = obtenerNumeroAleatorio(1, 3);
+        const opciones = ["", "Piedra", "Papel", "Tijera"];
+        const eleccionJugador = opciones[jugador];
+        const eleccionPc = opciones[pc];
+
+        document.getElementById(
+        "elecciones"
+        ).innerHTML = `<strong>Tu elección:</strong> ${eleccionJugador}<br><strong>PC eligió:</strong> ${eleccionPc}`;
+
+        let resultado = "";
+
+        if (jugador === pc) {
+        resultado = "EMPATE";
+        } else if (
+        (jugador === 1 && pc === 3) ||
+        (jugador === 2 && pc === 1) ||
+        (jugador === 3 && pc === 2)
+        ) {
+        resultado = "¡GANASTE!";
+        victoriasJugador++;
+        } else {
+        resultado = "PERDISTE";
+        victoriasPc++;
+        }
+
+        partidasJugadas++;
+
+        document.getElementById("resultado").innerText = resultado;
+        document.getElementById(
+        "marcador"
+        ).innerText = `Jugador: ${victoriasJugador} - PC: ${victoriasPc}`;
+
+        document.getElementById(
+        "historial"
+        ).innerHTML += `Ronda ${partidasJugadas}: Elegiste ${eleccionJugador}, la PC eligió ${eleccionPc} → ${resultado}<br/>`;
+
+        if (partidasJugadas === 3) {
+        document.getElementById("reiniciar").style.display = "inline-block";
+        document
+            .querySelectorAll(".btn-jugada")
+            .forEach((btn) => (btn.disabled = true));
+
+        setTimeout(() => {
+            if (victoriasJugador > victoriasPc) {
+            alert("🏆 ¡Ganaste el mejor de 3!");
+            } else if (victoriasPc > victoriasJugador) {
+            alert("😞 La computadora ganó el mejor de 3.");
+            } else {
+            alert("⚖️ Empate en el mejor de 3.");
+            }
+        }, 300);
+        }
+    }
+    function reiniciarJuego() {
+        victoriasJugador = 0;
+        victoriasPc = 0;
+        partidasJugadas = 0;
+        document.getElementById("resultado").innerText = "";
+        document.getElementById("elecciones").innerText = "";
+        document.getElementById("marcador").innerText = "";
+        document.getElementById("historial").innerHTML =
+        "<strong>Historial de Rondas:</strong><br/>";
+        document.getElementById("reiniciar").style.display = "none";
+        document
+        .querySelectorAll(".btn-jugada")
+        .forEach((btn) => (btn.disabled = false));
+    }
+    </script>
+</body>
+</html>
