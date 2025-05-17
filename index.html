@@ -57,6 +57,47 @@
         font-family: "Nunito", sans-serif;
         font-weight: bold;
     }
+    img {
+    max-width: 100%;
+    height: auto;
+}
+
+#opciones {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.btn-jugada img {
+    width: 80px;
+    height: 80px;
+}
+
+@media (min-width: 600px) {
+    .btn-jugada img {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+h1 {
+    font-size: 2em;
+}
+
+h2 {
+    font-size: 1.2em;
+    margin: 10px;
+}
+
+#resultado,
+#elecciones,
+#marcador,
+#historial {
+    font-size: 1em;
+    margin: 15px;
+    word-wrap: break-word;
+}
     </style>
 </head>
 <body>
