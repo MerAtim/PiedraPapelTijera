@@ -4,38 +4,88 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Piedra, Papel o Tijera</title>
-    <link
-    href="https://fonts.googleapis.com/css2?family=Nunito&display=swap"
-    rel="stylesheet"
-    />
     <style>
+    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Henny+Penny&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+    #resultado.disabled {
+        pointer-events: none;
+        opacity: 0.5;
+        user-select: none;
+        -webkit-user-select: none;
+    }
+
     body {
         font-family: "Nunito", sans-serif;
         text-align: center;
         background-color: #efefef;
         padding: 20px;
+        position: relative;
+        z-index: 0;
+        overflow-x: hidden;
     }
+
+    body::before {
+        content: "";
+        background-image: url("./assets/background.png");
+        background-repeat: repeat;
+        opacity: 0.08;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+    }
+
+    h1 {
+        font-family: "Henny Penny", cursive;
+        font-size: 3.5em;
+        margin-bottom: 20px;
+    }
+    h2 {
+        font-size: 1.8em;
+        margin: 20px;
+    }
+
     #resultado,
-    #elecciones,
     #marcador,
     #historial {
         margin: 20px;
-        font-size: 20px;
+        font-size: 25px;
+        word-wrap: break-word;
     }
+
+    #resultado {
+        border: 2px dashed #aaa;
+        background: #fff;
+        padding: 15px;
+        margin: 25px auto;
+        max-width: 400px;
+        border-radius: 10px;
+    }
+
     .btn-jugada {
         background: none;
         border: none;
         margin: 10px;
         cursor: pointer;
     }
+
     .btn-jugada img {
-        width: 100px;
-        height: 100px;
+        width: 80px;
+        height: 80px;
         transition: transform 0.2s ease;
     }
+
     .btn-jugada:hover img {
         transform: scale(1.1);
     }
+
+    /* Botones deshabilitados visualmente claros */
+    .btn-jugada:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+
     #reiniciar {
         display: none;
         padding: 10px 20px;
@@ -47,96 +97,89 @@
         border-radius: 8px;
         cursor: pointer;
     }
+
     #reiniciar:hover {
         background-color: #d73833;
     }
-    .label{
+
+    .label {
         text-align: center;
-        font-size: 16px;
+        font-size: 20px;
         margin-top: 5px;
-        font-family: "Nunito", sans-serif;
         font-weight: bold;
     }
-    img {
-    max-width: 100%;
-    height: auto;
-}
 
-#opciones {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-}
-
-.btn-jugada img {
-    width: 80px;
-    height: 80px;
-}
-
-@media (min-width: 600px) {
-    .btn-jugada img {
-        width: 100px;
-        height: 100px;
+    #opciones {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
     }
-}
 
-h1 {
-    font-size: 2em;
-}
+    @media (min-width: 600px) {
+        .btn-jugada img {
+            width: 100px;
+            height: 100px;
+        }
+    }
 
-h2 {
-    font-size: 1.2em;
-    margin: 10px;
-}
-
-#resultado,
-#elecciones,
-#marcador,
-#historial {
-    font-size: 1em;
-    margin: 15px;
-    word-wrap: break-word;
-}
+    @media (max-width: 400px) {
+        h1 {
+            font-size: 2em;
+        }
+        .btn-jugada img {
+            width: 60px;
+            height: 60px;
+        }
+    }
     </style>
 </head>
 <body>
     <h1>Piedra, Papel o Tijera</h1>
     <img
-    src="./assets/PPTCP.png"
-    alt="Piedra Papel Tijera"
-    width="800"
-    height="300"
+        src="./assets/PPTCP.png"
+        alt="Piedra Papel Tijera"
+        width="800"
+        height="300"
     />
-<div><h2>Tienes 3 rondas para jugar. Selecciona piedra, papel o tijera:</h2></div>
-<div id="opciones">
-<button class="btn-jugada" onclick="jugar(1)">
     <div>
-    <img src="./assets/piedra.png" alt="Piedra">
-    <div class="label">Piedra</div>
+        <h2>Tienes 3 rondas para jugar. Por favor, selecciona piedra, papel o tijera:</h2>
     </div>
-</button>
-<button class="btn-jugada" onclick="jugar(2)">
-    <div>
-    <img src="./assets/papel.png" alt="Papel">
-    <div class="label">Papel</div>
-    </div>
-</button>
-<button class="btn-jugada" onclick="jugar(3)">
-    <div>
-    <img src="./assets/tijera.png" alt="Tijera">
-    <div class="label">Tijera</div>
-    </div>
-</button>
-</div>
 
+    <div id="opciones">
+        <button class="btn-jugada" onclick="jugar(1)" aria-label="Elegir piedra">
+            <div>
+                <img src="./assets/piedra.png" alt="Piedra" />
+                <div class="label">Piedra</div>
+            </div>
+        </button>
+        <button class="btn-jugada" onclick="jugar(2)" aria-label="Elegir papel">
+            <div>
+                <img src="./assets/papel.png" alt="Papel" />
+                <div class="label">Papel</div>
+            </div>
+        </button>
+        <button class="btn-jugada" onclick="jugar(3)" aria-label="Elegir tijera">
+            <div>
+                <img src="./assets/tijera.png" alt="Tijera" />
+                <div class="label">Tijera</div>
+            </div>
+        </button>
+    </div>
 
-    <div id="elecciones"></div>
-    <div id="resultado"></div>
+    <div id="resultado" class="disabled"></div>
     <div id="marcador"></div>
     <div id="historial"><strong>Historial de Rondas:</strong><br /></div>
 
     <button id="reiniciar" onclick="reiniciarJuego()">Reiniciar juego</button>
+
+    <audio id="sound-win" src="./assets/sound/win.mp3"></audio>
+    <audio id="sound-lose" src="./assets/sound/lose.mp3"></audio>
+    <audio id="sound-draw" src="./assets/sound/draw.mp3"></audio>
+    <audio id="sound-select" src="./assets/sound/select.mp3"></audio>
+    <audio id="sound-victory" src="./assets/sound/victory.mp3" preload="auto"></audio>
+    <audio id="sound-defeat" src="./assets/sound/defeat.mp3" preload="auto"></audio>
+    <audio id="sound-tie" src="./assets/sound/tie.mp3" preload="auto"></audio>
 
     <script>
     let victoriasJugador = 0;
@@ -147,75 +190,107 @@ h2 {
         return Math.floor(Math.random() * (max - min + 1) + min);
     }
 
+    function reproducirSonidoFinal(resultadoFinal) {
+        if (resultadoFinal.includes("¡Ganaste")) {
+            document.getElementById("sound-victory").play();
+        } else if (resultadoFinal.includes("computadora ganó")) {
+            document.getElementById("sound-defeat").play();
+        } else if (resultadoFinal.includes("Empate")) {
+            document.getElementById("sound-tie").play();
+        }
+    }
+
+    function reproducirSonido(resultado) {
+        const sonidos = {
+            "¡GANASTE!": "sound-win",
+            "PERDISTE": "sound-lose",
+            "EMPATE": "sound-draw",
+        };
+        const sonido = document.getElementById(sonidos[resultado]);
+        if (sonido) sonido.play();
+    }
+
     function jugar(jugador) {
+        document.getElementById("resultado").classList.remove("disabled");
         if (partidasJugadas === 3) return;
+
+        const selectSound = document.getElementById("sound-select");
+        if (selectSound) {
+            selectSound.currentTime = 0;
+            selectSound.play();
+        }
 
         const pc = obtenerNumeroAleatorio(1, 3);
         const opciones = ["", "Piedra", "Papel", "Tijera"];
         const eleccionJugador = opciones[jugador];
         const eleccionPc = opciones[pc];
 
-        document.getElementById(
-        "elecciones"
-        ).innerHTML = `<strong>Tu elección:</strong> ${eleccionJugador}<br><strong>PC eligió:</strong> ${eleccionPc}`;
-
         let resultado = "";
 
         if (jugador === pc) {
-        resultado = "EMPATE";
+            resultado = "EMPATE";
         } else if (
-        (jugador === 1 && pc === 3) ||
-        (jugador === 2 && pc === 1) ||
-        (jugador === 3 && pc === 2)
+            (jugador === 1 && pc === 3) ||
+            (jugador === 2 && pc === 1) ||
+            (jugador === 3 && pc === 2)
         ) {
-        resultado = "¡GANASTE!";
-        victoriasJugador++;
+            resultado = "¡GANASTE!";
+            victoriasJugador++;
         } else {
-        resultado = "PERDISTE";
-        victoriasPc++;
+            resultado = "PERDISTE";
+            victoriasPc++;
         }
 
         partidasJugadas++;
+        reproducirSonido(resultado);
 
-        document.getElementById("resultado").innerText = resultado;
+        document.getElementById("resultado").innerHTML = `
+            <strong>Tu elección:</strong> ${eleccionJugador}<br>
+            <strong>PC eligió:</strong> ${eleccionPc}<br>
+            <strong>Resultado:</strong> ${resultado}
+        `;
+
         document.getElementById(
-        "marcador"
+            "marcador"
         ).innerText = `Jugador: ${victoriasJugador} - PC: ${victoriasPc}`;
 
         document.getElementById(
-        "historial"
+            "historial"
         ).innerHTML += `Ronda ${partidasJugadas}: Elegiste ${eleccionJugador}, la PC eligió ${eleccionPc} → ${resultado}<br/>`;
 
         if (partidasJugadas === 3) {
-        document.getElementById("reiniciar").style.display = "inline-block";
-        document
-            .querySelectorAll(".btn-jugada")
-            .forEach((btn) => (btn.disabled = true));
+            document.getElementById("reiniciar").style.display = "inline-block";
+            document.querySelectorAll(".btn-jugada").forEach((btn) => (btn.disabled = true));
 
-        setTimeout(() => {
+            let resultadoFinal = "";
+
             if (victoriasJugador > victoriasPc) {
-            alert("🏆 ¡Ganaste el mejor de 3!");
+                resultadoFinal = "🏆 ¡Ganaste el mejor de 3!";
             } else if (victoriasPc > victoriasJugador) {
-            alert("😞 La computadora ganó el mejor de 3.");
+                resultadoFinal = "😞 La computadora ganó el mejor de 3.";
             } else {
-            alert("⚖️ Empate en el mejor de 3.");
+                resultadoFinal = "⚖️ Empate en el mejor de 3.";
             }
-        }, 300);
+            reproducirSonidoFinal(resultadoFinal);
+
+            document.getElementById("resultado").innerHTML += `
+                <hr>
+                <div style="font-size: 1.2em; font-weight: bold; color: #333;">${resultadoFinal}</div>
+            `;
         }
     }
+
     function reiniciarJuego() {
         victoriasJugador = 0;
         victoriasPc = 0;
         partidasJugadas = 0;
         document.getElementById("resultado").innerText = "";
-        document.getElementById("elecciones").innerText = "";
         document.getElementById("marcador").innerText = "";
-        document.getElementById("historial").innerHTML =
-        "<strong>Historial de Rondas:</strong><br/>";
+        document.getElementById("historial").innerHTML = "<strong>Historial de Rondas:</strong><br/>";
         document.getElementById("reiniciar").style.display = "none";
-        document
-        .querySelectorAll(".btn-jugada")
-        .forEach((btn) => (btn.disabled = false));
+        document.querySelectorAll(".btn-jugada").forEach((btn) => (btn.disabled = false));
+        // Agrego la clase disabled para que quede visualmente desactivado al reiniciar
+        document.getElementById("resultado").classList.add("disabled");
     }
     </script>
 </body>
