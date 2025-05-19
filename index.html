@@ -116,6 +116,12 @@
         gap: 20px;
     }
 
+    .img-responsive {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto 20px auto;
+}
     @media (min-width: 600px) {
         .btn-jugada img {
             width: 100px;
@@ -137,13 +143,14 @@
 <body>
     <h1>Piedra, Papel o Tijera</h1>
     <img
-        src="./assets/PPTCP.png"
-        alt="Piedra Papel Tijera"
-        width="800"
-        height="300"
-    />
+    src="./assets/PPTCP.png"
+    alt="Piedra Papel Tijera"
+    class="img-responsive"
+/>
     <div>
-        <h2>Tienes 3 rondas para jugar. Por favor, selecciona piedra, papel o tijera:</h2>
+        <h2>¡Bienvenido al juego!</h2>
+        <p>Elige entre piedra, papel o tijera y compite contra la computadora.</p>
+        <p>El primero en ganar 3 rondas gana el juego.</p>
     </div>
 
     <div id="opciones">
