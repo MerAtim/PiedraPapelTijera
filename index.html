@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Piedra, Papel o Tijera</title>
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Henny+Penny&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+    @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Henny+Penny&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
     #resultado.disabled {
         pointer-events: none;
         opacity: 0.5;
@@ -27,7 +27,8 @@
         content: "";
         background-image: url("./assets/background.png");
         background-repeat: repeat;
-        opacity: 0.08;
+        background-size: 300px 300px; /* Para que la imagen se vea mas chica */
+        opacity: 0.2;
         position: fixed;
         top: 0;
         left: 0;
@@ -80,7 +81,7 @@
         transform: scale(1.1);
     }
 
-    /* Botones deshabilitados visualmente claros */
+      /* Botones deshabilitados visualmente claros */
     .btn-jugada:disabled {
         opacity: 0.4;
         cursor: not-allowed;
@@ -91,7 +92,7 @@
         padding: 10px 20px;
         font-size: 18px;
         font-family: "Nunito", sans-serif;
-        background-color: #f44336;
+        background-color: #7cc05a;
         color: white;
         border: none;
         border-radius: 8px;
@@ -117,25 +118,135 @@
     }
 
     .img-responsive {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto 20px auto;
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto 20px auto;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 100000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    .modal-content button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    }
+
+    .modal-content {
+        background-color: #c3e0ec;
+        padding: 20px;
+        border-radius: 10px;
+        width: 80%;
+        max-width: 400px;
+        text-align: center;
+        margin: auto;
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+        animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .modal-text {
+        font-size: 25px;
+        margin-bottom: 20px;
+    }
+
+    .modal-content button:hover {
+    background-color: #5fb4c1;
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .close:hover {
+        color: #333;
+    }
+
+    .firework {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--color);
+    position: absolute;
+    animation: explode 2s forwards;
+    pointer-events: none;
+    opacity: 1;
 }
+@keyframes explode {
+    0% {
+    transform: scale(1) translate(0, 0);
+    opacity: 1;
+    }
+    100% {
+    transform: scale(4) translate(var(--x), var(--y));
+    opacity: 0;
+    }
+}
+    @keyframes fadeIn {
+        from {
+        opacity: 0;
+        transform: translateY(-20px);
+        }
+        to {
+        opacity: 1;
+        transform: translateY(0);
+        }
+    }
+
+    .emoji-drop {
+        position: fixed;
+        top: -2em;
+        font-size: 2em;
+        animation: drop 3s linear infinite;
+        z-index: 1000;
+    }
+
+    @keyframes drop {
+        0% {
+        transform: translateY(0);
+        opacity: 1;
+        }
+        100% {
+        transform: translateY(100vh);
+        opacity: 0;
+        }
+    }
+
     @media (min-width: 600px) {
         .btn-jugada img {
-            width: 100px;
-            height: 100px;
+        width: 100px;
+        height: 100px;
         }
     }
 
     @media (max-width: 400px) {
         h1 {
-            font-size: 2em;
+        font-size: 2em;
         }
         .btn-jugada img {
-            width: 60px;
-            height: 60px;
+        width: 60px;
+        height: 60px;
         }
     }
     </style>
@@ -146,32 +257,32 @@
     src="./assets/PPTCP.png"
     alt="Piedra Papel Tijera"
     class="img-responsive"
-/>
+    />
     <div>
-        <h2>¡Bienvenido al juego!</h2>
-        <p>Elige entre piedra, papel o tijera y compite contra la computadora.</p>
-        <p>El primero en ganar 3 rondas gana el juego.</p>
+    <h2>¡Bienvenido al juego!</h2>
+    <p>Elige entre piedra, papel o tijera y compite contra la computadora.</p>
+    <p>El primero en ganar 3 rondas gana el juego.</p>
     </div>
 
     <div id="opciones">
-        <button class="btn-jugada" onclick="jugar(1)" aria-label="Elegir piedra">
-            <div>
-                <img src="./assets/piedra.png" alt="Piedra" />
-                <div class="label">Piedra</div>
-            </div>
-        </button>
-        <button class="btn-jugada" onclick="jugar(2)" aria-label="Elegir papel">
-            <div>
-                <img src="./assets/papel.png" alt="Papel" />
-                <div class="label">Papel</div>
-            </div>
-        </button>
-        <button class="btn-jugada" onclick="jugar(3)" aria-label="Elegir tijera">
-            <div>
-                <img src="./assets/tijera.png" alt="Tijera" />
-                <div class="label">Tijera</div>
-            </div>
-        </button>
+    <button class="btn-jugada" onclick="jugar(1)" aria-label="Elegir piedra">
+        <div>
+        <img src="./assets/piedra.png" alt="Piedra" />
+        <div class="label">Piedra</div>
+        </div>
+    </button>
+    <button class="btn-jugada" onclick="jugar(2)" aria-label="Elegir papel">
+        <div>
+        <img src="./assets/papel.png" alt="Papel" />
+        <div class="label">Papel</div>
+        </div>
+    </button>
+    <button class="btn-jugada" onclick="jugar(3)" aria-label="Elegir tijera">
+        <div>
+        <img src="./assets/tijera.png" alt="Tijera" />
+        <div class="label">Tijera</div>
+        </div>
+    </button>
     </div>
 
     <div id="resultado" class="disabled"></div>
@@ -184,20 +295,28 @@
     <audio id="sound-lose" src="./assets/sound/lose.mp3"></audio>
     <audio id="sound-draw" src="./assets/sound/draw.mp3"></audio>
     <audio id="sound-select" src="./assets/sound/select.mp3"></audio>
-    <audio id="sound-victory" src="./assets/sound/victory.mp3" preload="auto"></audio>
-    <audio id="sound-defeat" src="./assets/sound/defeat.mp3" preload="auto"></audio>
+    <audio
+    id="sound-victory"
+        src="./assets/sound/victory.mp3"
+        preload="auto"
+    ></audio>
+    <audio
+        id="sound-defeat"
+        src="./assets/sound/defeat.mp3"
+        preload="auto"
+    ></audio>
     <audio id="sound-tie" src="./assets/sound/tie.mp3" preload="auto"></audio>
 
     <script>
-    let victoriasJugador = 0;
-    let victoriasPc = 0;
-    let partidasJugadas = 0;
+        let victoriasJugador = 0;
+        let victoriasPc = 0;
+        let partidasJugadas = 0;
 
-    function obtenerNumeroAleatorio(min, max) {
+        function obtenerNumeroAleatorio(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
-    }
+        }
 
-    function reproducirSonidoFinal(resultadoFinal) {
+        function reproducirSonidoFinal(resultadoFinal) {
         if (resultadoFinal.includes("¡Ganaste")) {
             document.getElementById("sound-victory").play();
         } else if (resultadoFinal.includes("computadora ganó")) {
@@ -205,19 +324,19 @@
         } else if (resultadoFinal.includes("Empate")) {
             document.getElementById("sound-tie").play();
         }
-    }
+        }
 
-    function reproducirSonido(resultado) {
+        function reproducirSonido(resultado) {
         const sonidos = {
             "¡GANASTE!": "sound-win",
-            "PERDISTE": "sound-lose",
-            "EMPATE": "sound-draw",
+            PERDISTE: "sound-lose",
+            EMPATE: "sound-draw",
         };
         const sonido = document.getElementById(sonidos[resultado]);
         if (sonido) sonido.play();
-    }
+        }
 
-    function jugar(jugador) {
+        function jugar(jugador) {
         document.getElementById("resultado").classList.remove("disabled");
         if (partidasJugadas === 3) return;
 
@@ -267,38 +386,109 @@
 
         if (partidasJugadas === 3) {
             document.getElementById("reiniciar").style.display = "inline-block";
-            document.querySelectorAll(".btn-jugada").forEach((btn) => (btn.disabled = true));
+            document
+            .querySelectorAll(".btn-jugada")
+            .forEach((btn) => (btn.disabled = true));
 
             let resultadoFinal = "";
 
             if (victoriasJugador > victoriasPc) {
-                resultadoFinal = "🏆 ¡Ganaste el mejor de 3!";
+            resultadoFinal = "🏆 ¡Ganaste el mejor de 3!";
             } else if (victoriasPc > victoriasJugador) {
-                resultadoFinal = "😞 La computadora ganó el mejor de 3.";
+            resultadoFinal = "😞 La computadora ganó el mejor de 3.";
             } else {
-                resultadoFinal = "⚖️ Empate en el mejor de 3.";
+            resultadoFinal = "⚖️ ¡Empate!";
             }
             reproducirSonidoFinal(resultadoFinal);
 
-            document.getElementById("resultado").innerHTML += `
-                <hr>
-                <div style="font-size: 1.2em; font-weight: bold; color: #333;">${resultadoFinal}</div>
-            `;
-        }
-    }
+            mostrarModal(resultadoFinal);
 
-    function reiniciarJuego() {
+            if (resultadoFinal.includes("Ganaste")) {
+            lanzarFuegosArtificiales();
+            } else if (resultadoFinal.includes("computadora ganó")) {
+            lluviaDeEmojis();
+            }
+        }
+        }
+
+        function reiniciarJuego() {
         victoriasJugador = 0;
         victoriasPc = 0;
         partidasJugadas = 0;
         document.getElementById("resultado").innerText = "";
         document.getElementById("marcador").innerText = "";
-        document.getElementById("historial").innerHTML = "<strong>Historial de Rondas:</strong><br/>";
+        document.getElementById("historial").innerHTML =
+            "<strong>Historial de Rondas:</strong><br/>";
         document.getElementById("reiniciar").style.display = "none";
-        document.querySelectorAll(".btn-jugada").forEach((btn) => (btn.disabled = false));
-        // Agrego la clase disabled para que quede visualmente desactivado al reiniciar
+        document
+            .querySelectorAll(".btn-jugada")
+            .forEach((btn) => (btn.disabled = false));
+        
         document.getElementById("resultado").classList.add("disabled");
+        }
+
+        function mostrarModal(texto) {
+        document.getElementById("modal-text").innerText = texto;
+        document.getElementById("modal").style.display = "block";
+        }
+
+        function cerrarModal() {
+        document.getElementById("modal").style.display = "none";
+        }
+
+        function reiniciarDesdeModal() {
+        cerrarModal();
+        reiniciarJuego();
+}
+    const colors = ["#ff595e", "#ffca3a", "#8ac926", "#1982c4", "#6a4c93", "#FF689D", "#23BAC4", "#E7D40A", "#E36B2C", "#38CEAC"];
+
+        function lanzarFuegosArtificiales() {
+        for (let i = 0; i < 30; i++) {
+            const firework = document.createElement("div");
+            firework.classList.add("firework");
+            firework.style.left = `${Math.random() * 100}%`;
+            firework.style.top = `${Math.random() * 100}%`;
+
+            const x = `${(Math.random() - 0.5) * 300}px`;
+            const y = `${(Math.random() - 0.5) * 300}px`;
+            firework.style.setProperty("--x", x);
+            firework.style.setProperty("--y", y);
+
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            firework.style.setProperty("--color", color);
+
+            firework.style.animationDelay = `${Math.random() * 0.5}s`;/* Cambia el tiempo de animación. esto es para que no todos los fuegos artificiales exploten al mismo tiempo*/
+
+            document.body.appendChild(firework);
+
+            setTimeout(() => {
+            firework.remove();
+            }, 6000);
+        }
+}
+
+        function lluviaDeEmojis() {
+        const emojis = ["😢", "💔", "😭"];
+        for (let i = 0; i < 30; i++) {
+        const emoji = document.createElement("div");
+        emoji.classList.add("emoji-drop");
+        emoji.style.left = `${Math.random() * 100}vw`;
+        emoji.style.animationDelay = `${Math.random() * 3}s`;
+        emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+        document.body.appendChild(emoji);
+
+        setTimeout(() => {
+            emoji.remove();
+        }, 5000);
+    }
     }
     </script>
-</body>
+    <div id="modal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrarModal()">&times;</span>
+        <div id="modal-text"></div>
+        <button onclick="reiniciarDesdeModal()">Reiniciar</button>
+    </div>
+    </div>
+    </body>
 </html>
