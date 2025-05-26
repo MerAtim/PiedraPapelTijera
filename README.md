@@ -21,7 +21,8 @@ Este es un proyecto simple del clásico juego "Piedra, Papel o Tijera", desarrol
 • Piedra gana a Tijera
 • Tijera gana a Papel
 • Papel gana a Piedra
-• Si ambos eligen lo mismo, ¡empate!  <br> <br>
+• Si ambos eligen lo mismo, ¡empate!
+• Tenes tres rondas para ganar. El mejor de tres es el vencedor <br> <br>
 
 ### 💡 Objetivo
 
