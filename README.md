@@ -18,10 +18,10 @@ Este es un proyecto simple del clásico juego "Piedra, Papel o Tijera", desarrol
 
 ### 🧠 Lógica del juego
 
-• Piedra gana a Tijera
-• Tijera gana a Papel
-• Papel gana a Piedra
-• Si ambos eligen lo mismo, ¡empate!
+• Piedra gana a Tijera <br>
+• Tijera gana a Papel <br>
+• Papel gana a Piedra <br>
+• Si ambos eligen lo mismo, ¡empate! <br>
 • Tenes tres rondas para ganar. El mejor de tres es el vencedor <br> <br>
 
 ### 💡 Objetivo
