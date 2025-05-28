@@ -3,256 +3,12 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles.css">
     <title>Piedra, Papel o Tijera</title>
-    <style>
-    @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Henny+Penny&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
-    #resultado.disabled {
-        pointer-events: none;
-        opacity: 0.5;
-        user-select: none;
-        -webkit-user-select: none;
-    }
 
-    body {
-        font-family: "Nunito", sans-serif;
-        text-align: center;
-        background-color: #efefef;
-        padding: 20px;
-        position: relative;
-        z-index: 0;
-        overflow-x: hidden;
-    }
-
-    body::before {
-        content: "";
-        background-image: url("./assets/background.png");
-        background-repeat: repeat;
-        background-size: 300px 300px; /* Para que la imagen se vea mas chica */
-        opacity: 0.2;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-    }
-
-    h1 {
-        font-family: "Henny Penny", cursive;
-        font-size: 3.5em;
-        margin-bottom: 20px;
-    }
-    h2 {
-        font-size: 1.8em;
-        margin: 20px;
-    }
-
-    #resultado,
-    #marcador,
-    #historial {
-        margin: 20px;
-        font-size: 15px;
-        word-wrap: break-word;
-    }
-
-    #resultado {
-        border: 2px dashed #aaa;
-        background: #fff;
-        padding: 15px;
-        margin: 25px auto;
-        max-width: 400px;
-        border-radius: 10px;
-    }
-
-    .btn-jugada {
-        background: none;
-        border: none;
-        margin: 10px;
-        cursor: pointer;
-    }
-
-    .btn-jugada img {
-        width: 80px;
-        height: 80px;
-        transition: transform 0.2s ease;
-    }
-
-    .btn-jugada:hover img {
-        transform: scale(1.1);
-    }
-
-      /* Botones deshabilitados visualmente claros */
-    .btn-jugada:disabled {
-        opacity: 0.4;
-        cursor: not-allowed;
-    }
-
-    #reiniciar {
-        display: none;
-        padding: 10px 20px;
-        font-size: 18px;
-        font-family: "Nunito", sans-serif;
-        background-color: #7cc05a;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-    }
-
-    #reiniciar:hover {
-        background-color: #d73833;
-    }
-
-    .label {
-        text-align: center;
-        font-size: 20px;
-        margin-top: 5px;
-        font-weight: bold;
-    }
-
-    #opciones {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 20px;
-    }
-
-    .img-responsive {
-        max-width: 100%;
-        height: auto;
-        display: block;
-        margin: 0 auto 20px auto;
-    }
-
-    .modal {
-        display: none;
-        position: fixed;
-        z-index: 100000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.6);
-    }
-
-    .modal-content button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 1em;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    }
-
-    .modal-content {
-        background-color: #c3e0ec;
-        padding: 20px;
-        border-radius: 10px;
-        width: 80%;
-        max-width: 400px;
-        text-align: center;
-        margin: auto;
-        position: relative;
-        top: 50%;
-        transform: translateY(-50%);
-        animation: fadeIn 0.5s ease-in-out;
-    }
-
-    .modal-text {
-        font-size: 25px;
-        margin-bottom: 20px;
-    }
-
-    .modal-content button:hover {
-    background-color: #5fb4c1;
-    }
-
-    .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-    .close:hover {
-        color: #333;
-    }
-
-    .firework {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background-color: var(--color);
-    position: absolute;
-    animation: explode 2s forwards;
-    pointer-events: none;
-    opacity: 1;
-}
-@keyframes explode {
-    0% {
-    transform: scale(1) translate(0, 0);
-    opacity: 1;
-    }
-    100% {
-    transform: scale(4) translate(var(--x), var(--y));
-    opacity: 0;
-    }
-}
-    @keyframes fadeIn {
-        from {
-        opacity: 0;
-        transform: translateY(-20px);
-        }
-        to {
-        opacity: 1;
-        transform: translateY(0);
-        }
-    }
-
-    .emoji-drop {
-        position: fixed;
-        top: -2em;
-        font-size: 2em;
-        animation: drop 3s linear infinite;
-        z-index: 1000;
-    }
-
-    @keyframes drop {
-        0% {
-        transform: translateY(0);
-        opacity: 1;
-        }
-        100% {
-        transform: translateY(100vh);
-        opacity: 0;
-        }
-    }
-
-    @media (min-width: 600px) {
-        .btn-jugada img {
-        width: 100px;
-        height: 100px;
-        }
-    }
-
-    @media (max-width: 400px) {
-        h1 {
-        font-size: 2em;
-        }
-        .btn-jugada img {
-        width: 60px;
-        height: 60px;
-        }
-    }
-    </style>
 </head>
 <body>
-    <h1>Piedra, Papel o Tijera</h1>
+    <h1>🪨📄✂️ Piedra, Papel o Tijera</h1>
     <img
     src="./assets/PPTCP.png"
     alt="Piedra Papel Tijera"
@@ -354,16 +110,16 @@
         let resultado = "";
 
         if (jugador === pc) {
-            resultado = "EMPATE";
+            resultado = "EMPATE 🤝";
         } else if (
             (jugador === 1 && pc === 3) ||
             (jugador === 2 && pc === 1) ||
             (jugador === 3 && pc === 2)
         ) {
-            resultado = "¡GANASTE!";
+            resultado = "¡GANASTE! 🎉";
             victoriasJugador++;
         } else {
-            resultado = "PERDISTE";
+            resultado = "PERDISTE 😢";
             victoriasPc++;
         }
 
@@ -446,24 +202,24 @@
         for (let i = 0; i < 30; i++) {
             const firework = document.createElement("div");
             firework.classList.add("firework");
-            firework.style.left = `${Math.random() * 100}%`;
-            firework.style.top = `${Math.random() * 100}%`;
+            firework.style.left = `${Math.random() * 200}%`;
+            firework.style.top = `${Math.random() * 200}%`;
 
-            const x = `${(Math.random() - 0.5) * 300}px`;
-            const y = `${(Math.random() - 0.5) * 300}px`;
+            const x = `${(Math.random() - 0.5) * 400}px`;
+            const y = `${(Math.random() - 0.5) * 400}px`;
             firework.style.setProperty("--x", x);
             firework.style.setProperty("--y", y);
 
             const color = colors[Math.floor(Math.random() * colors.length)];
             firework.style.setProperty("--color", color);
 
-            firework.style.animationDelay = `${Math.random() * 0.5}s`;/* Cambia el tiempo de animación. esto es para que no todos los fuegos artificiales exploten al mismo tiempo*/
+            firework.style.animationDelay = `${Math.random() * 0.5}s`;/* esto es para que no todos los fuegos artificiales exploten al mismo tiempo*/
 
             document.body.appendChild(firework);
 
             setTimeout(() => {
             firework.remove();
-            }, 6000);
+            }, 8000);
         }
 }
 
